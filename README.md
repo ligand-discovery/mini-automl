@@ -2,7 +2,9 @@
 This repository contains a simple AutoML tool based on [TabPFN](https://github.com/automl/TabPFN) to quickly perform binary classification tasks.
 
 ## Installation
-The module is `pip`-installable:
+
+The Mini-AutoML module is `pip`-installable:
+
 ```bash
 git clone https://github.com/ligand-discovery/mini-automl
 cd mini-automl
