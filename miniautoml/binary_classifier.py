@@ -17,6 +17,7 @@ class BinaryClassifier(object):
 
 
 def train_binary_classifier(X, y, n_splits=10, test_size=0.2):
+    y = np.array(y)
     aucs = []
     fprs = []
     tprs = []
