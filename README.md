@@ -18,13 +18,13 @@ from fragmentembedding import FragmentEmbedder
 from miniautoml import train_binary_classifier, get_example
 
 df = get_example()
-smiles_list = df["smiles"].tolist()[:-10]
-y = df["signature_2"].tolist()[:-10]
+smiles_list = df["smiles"].tolist()
+y = df["signature_2"].tolist()
 
 X = FragmentEmbedder().transform(smiles_list)
-mdl = train_binary_classifier(X, y, n_splits=5)
+mdl = train_binary_classifier(X[:-10], y[:-10], n_splits=5)
 
-mdl.predict(smiles_list[-10:])
+mdl.predict(X[-10:])
 ```
 
 The code above will automatically perform a stratified shuffle splits to estimate model performance. If you just want to train the model, simply set `n_splits=None`.
