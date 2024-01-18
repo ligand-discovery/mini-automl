@@ -1,10 +1,31 @@
 import numpy as np
-from lol import LOL
+from sklearn.feature_selection import SelectKBest, VarianceThreshold
 from tabpfn import TabPFNClassifier
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.metrics import roc_curve, auc
+from warnings import simplefilter
+
+# ignore all warnings
+simplefilter(action='ignore')
 
 tabpfn_classifier = TabPFNClassifier(N_ensemble_configurations=32)
+
+
+class KBestReducer(object):
+    def __init__(self, k=10):
+        self.k = k
+        self.variance = VarianceThreshold()
+        self.select = SelectKBest(k=k)
+
+    def fit(self, X, y):
+        self.variance.fit(X)
+        X = self.variance.transform(X)
+        self.select.fit(X, y)
+
+    def transform(self, X):
+        X = self.variance.transform(X)
+        X = self.select.transform(X)
+        return X
 
 
 class BinaryClassifier(object):
@@ -23,9 +44,9 @@ def train_binary_classifier(X, y, n_splits=10, test_size=0.2):
     aucs = []
     fprs = []
     tprs = []
-    red = LOL(n_components=100)
+    red = KBestReducer(k=10)
     mdl = tabpfn_classifier
-    #mdl.remove_models_from_memory()
+    mdl.remove_models_from_memory()
     if n_splits is not None:
         splitter = StratifiedShuffleSplit(n_splits=n_splits, test_size=test_size)
         for i, (train_index, test_index) in enumerate(splitter.split(X, y)):
