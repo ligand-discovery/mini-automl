@@ -8,6 +8,9 @@ root = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(root, "..", "data")
 results_dir = os.path.join(root, "..", "results")
 
+if not os.path.exists(results_dir):
+    os.makedirs(results_dir)
+
 df = pd.read_csv(os.path.join(data_dir, "promiscuity_pxf.csv"))
 
 smiles_list = df["smiles"].tolist()
