@@ -51,7 +51,10 @@ To pretrain promiscuity and signature models, execute the following:
 ```bash
 python scripts/00_data_preparation.py
 python scripts/01_train_promiscuity.py
-
+python scripts/02_predict_promiscuity.py
+python scripts/03_train_signatures.py
+python scripts/04_predict_signatures.py
+python scripts/05_assemble.py
 ```
 
 ## About
